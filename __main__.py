@@ -6,9 +6,7 @@ import logging
 import sched
 import time
 
-
-#log configuration
-#logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.Error)
 
 #log usage.
 #logging.debug('This message should go to the log file')
@@ -28,9 +26,10 @@ def checkProcess():
 
 def writeLog(text):
     try:
-        stream = open('bossSpy.log', '+a')
-        stream.Write(text)
-        stream.close()
+        #stream = open('bossSpy.log', '+a')
+        #stream.Write(text)
+        #stream.close()
+        logging.debug(text)
     except Exception as exception:
         ErrorHelper.displayError('an error has occured')
 
