@@ -3,6 +3,10 @@ import espeakng
 import os
 import subprocess
 import logging
+import sched
+import time
+import tkinter
+
 
 #log configuration
 #logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.DEBUG)
@@ -15,8 +19,25 @@ def get_smtp_object():
 
 def getEmails():
     unread_count = connections.get_unread_count()
+    writeLog('Get Emails Rain')
     if unread_count > 2:
         # Scream.
         connections.get_espeak(unread_count)
 
-getEmails()
+def checkProcess():
+    pass
+
+def writeLog(text):
+    try:
+        stream = open('bossSpy.log', '+a')
+        stream.Write(text)
+        stream.close()
+    except Exception as exception:
+        print('an error has occured')
+
+    pass
+
+event_schedule = sched.scheduler(time.time, time.sleep)
+event_schedule.enter(30, 1, getEmails, (s,))
+event_schedule.enter(30, 1, checkProcess, (s,))
+event_schedule.run()
