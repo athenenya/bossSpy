@@ -8,10 +8,7 @@ import time
 import subprocess
 from datetime import datetime
 
-logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.Error)
-
-#log usage.
-#logging.debug('This message should go to the log file')
+logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=all)
 
 def get_smtp_object():
     pass
