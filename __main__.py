@@ -1,11 +1,10 @@
-from src import connections
+from src import connections, ErrorHelper
 import espeakng
 import os
 import subprocess
 import logging
 import sched
 import time
-import tkinter
 
 
 #log configuration
@@ -33,9 +32,8 @@ def writeLog(text):
         stream.Write(text)
         stream.close()
     except Exception as exception:
-        print('an error has occured')
+        ErrorHelper.displayError('an error has occured')
 
-    pass
 
 event_schedule = sched.scheduler(time.time, time.sleep)
 event_schedule.enter(30, 1, getEmails, (s,))
