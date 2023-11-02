@@ -5,6 +5,8 @@ import subprocess
 import logging
 import sched
 import time
+import subprocess
+from datetime import datetime
 
 logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.Error)
 
@@ -21,15 +23,25 @@ def getEmails():
         # Scream.
         connections.get_espeak(unread_count)
 
+
 def checkProcess():
-    pass
+    cmd = 'powershell "gps | where {$_.MainWindowTitle } | select Description'
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    for line in proc.stdout:
+        if line.rstrip():
+            # only print lines that are not empty
+            # # decode() is necessary to get rid of the binary string (b')
+            # # rstrip() to remove `\r\n`
+            logging.debug(f"{line.decode().rstrip()} running on {now}")
+
 
 def writeLog(text):
     try:
         #stream = open('bossSpy.log', '+a')
         #stream.Write(text)
         #stream.close()
-        logging.debug(text)
+        logging.error(text)
     except Exception as exception:
         ErrorHelper.displayError('an error has occured')
 
