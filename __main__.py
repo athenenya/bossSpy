@@ -8,7 +8,7 @@ import time
 import subprocess
 from datetime import datetime
 
-logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=all)
+logging.basicConfig(filename='bossSpy.log', encoding='utf-8', level=logging.INFO)
 
 def get_smtp_object():
     pass
@@ -30,7 +30,7 @@ def checkProcess():
             # only print lines that are not empty
             # # decode() is necessary to get rid of the binary string (b')
             # # rstrip() to remove `\r\n`
-            logging.debug(f"{line.decode().rstrip()} running on {now}")
+            logging.info(f"{line.decode().rstrip()} running on {now}")
 
 
 def writeLog(text):
@@ -44,6 +44,7 @@ def writeLog(text):
 
 
 event_schedule = sched.scheduler(time.time, time.sleep)
-event_schedule.enter(30, 1, getEmails, (s,))
-event_schedule.enter(30, 1, checkProcess, (s,))
+# The last argument is for the arguments to send to the action.
+event_schedule.enter(30, 1, getEmails, ())
+event_schedule.enter(30, 1, checkProcess, ())
 event_schedule.run()
